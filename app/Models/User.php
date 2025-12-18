@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -25,7 +26,8 @@ class User extends Authenticatable
         'skills',
         'experience',
         'education',
-        'is_active'
+        'is_active',
+        'profile_picture'
     ];
 
     protected $hidden = [
@@ -151,5 +153,13 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         return $this->role === $role;
+    }
+    public function getProfilePictureUrlAttribute()
+    {
+        if ($this->profile_picture) {
+            return Storage::url($this->profile_picture);
+        }
+        
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=4e73df&color=fff&size=200&bold=true';
     }
 }

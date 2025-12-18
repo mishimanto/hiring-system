@@ -22,9 +22,9 @@
             
             <div class="brand-text d-flex flex-column">
                 <span class="fw-bold text-primary fs-4 lh-1">{{ $site_name }}</span>
-                <small class="text-muted fw-normal" style="font-size: 0.75rem; margin-top: -3px;">
+                <!-- <small class="text-muted fw-normal" style="font-size: 0.75rem; margin-top: -3px;">
                     Find Your Dream Job
-                </small>
+                </small> -->
             </div>
         </a>
         
@@ -42,7 +42,7 @@
         <li class="nav-item mx-1">
             <a class="nav-link d-flex align-items-center py-2 px-3 rounded-3 transition-all {{ request()->routeIs('home') ? 'active text-white bg-primary' : 'text-dark' }}" 
                href="{{ route('home') }}">
-                <i class="fas fa-home me-2 fs-6"></i>
+                <!-- <i class="fas fa-home me-2 fs-6"></i> -->
                 <span class="fw-medium">Home</span>
             </a>
         </li>
@@ -51,13 +51,13 @@
         <li class="nav-item mx-1">
             <a class="nav-link d-flex align-items-center py-2 px-3 rounded-3 transition-all {{ request()->routeIs('jobs.*') ? 'active text-white bg-primary' : 'text-dark' }}" 
                href="{{ route('jobs.index') }}">
-                <i class="fas fa-briefcase me-2 fs-6"></i>
+                <!-- <i class="fas fa-briefcase me-2 fs-6"></i> -->
                 <span class="fw-medium">Find Jobs</span>
-                @if(isset($activeJobsCount))
+                <!-- @if(isset($activeJobsCount))
                     <span class="badge bg-danger ms-2 transition-all" style="font-size: 0.65rem; padding: 2px 6px;">
                         {{ $activeJobsCount }}
                     </span>
-                @endif
+                @endif -->
             </a>
         </li>
 
@@ -65,7 +65,7 @@
         <li class="nav-item mx-1">
             <a class="nav-link d-flex align-items-center py-2 px-3 rounded-3 transition-all {{ request()->routeIs('about') ? 'active text-white bg-primary' : 'text-dark' }}" 
                href="{{ route('about') }}">
-                <i class="fas fa-info-circle me-2 fs-6"></i>
+                <!-- <i class="fas fa-info-circle me-2 fs-6"></i> -->
                 <span class="fw-medium">About</span>
             </a>
         </li>
@@ -74,7 +74,7 @@
         <li class="nav-item mx-1">
             <a class="nav-link d-flex align-items-center py-2 px-3 rounded-3 transition-all {{ request()->routeIs('contact') ? 'active text-white bg-primary' : 'text-dark' }}" 
                href="{{ route('contact') }}">
-                <i class="fas fa-envelope me-2 fs-6"></i>
+                <!-- <i class="fas fa-envelope me-2 fs-6"></i> -->
                 <span class="fw-medium">Contact</span>
             </a>
         </li>
@@ -82,8 +82,8 @@
         <!-- Legal Dropdown -->
         <li class="nav-item dropdown mx-1">
             <a class="nav-link d-flex align-items-center py-2 px-3 rounded-3 transition-all text-dark" href="#" role="button" data-bs-toggle="dropdown">
-                <i class="fas fa-gavel me-2 fs-6"></i>
-                <span class="fw-medium">Legal</span>
+                <!-- <i class="fas fa-gavel me-2 fs-6"></i> -->
+                <span class="fw-medium">Others</span>
                 <i class="fas fa-chevron-down ms-1 fs-6"></i>
             </a>
             <ul class="dropdown-menu shadow border-0 p-2 rounded-3">
@@ -268,10 +268,10 @@
         border: 1px solid rgba(0, 0, 0, 0.05);
     }
     
-    .brand-logo-container:hover {
+    /* .brand-logo-container:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    }
+    } */
     
     /* Brand Icon Container */
     .brand-icon-container {

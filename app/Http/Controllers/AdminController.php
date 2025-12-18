@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\OpenJob;
 use App\Models\JobApplication;
+use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -29,10 +30,58 @@ class AdminController extends Controller
             'active_job_seekers' => User::jobSeekers()->active()->count(),
         ];
 
+        // Monthly statistics for charts
+        $monthlyStats = $this->getMonthlyStats();
+        
+        // Job status data for chart
+        $jobStatusData = [
+            OpenJob::where('status', 'approved')->count(),
+            OpenJob::where('status', 'pending')->count(),
+            OpenJob::where('status', 'rejected')->count(),
+            OpenJob::where('deadline', '<', now())->count(),
+        ];
+
+        // User role data for chart
+        $userRoleData = [
+            User::where('role', 'admin')->count(),
+            User::where('role', 'employer')->count(),
+            User::where('role', 'job_seeker')->count(),
+        ];
+
         $recentJobs = OpenJob::with('employer')->latest()->take(5)->get();
         $recentUsers = User::latest()->take(5)->get();
 
-        return view('admin.dashboard', compact('stats', 'recentJobs', 'recentUsers'));
+        return view('admin.dashboard', compact(
+            'stats', 
+            'recentJobs', 
+            'recentUsers',
+            'monthlyStats',
+            'jobStatusData',
+            'userRoleData'
+        ));
+    }
+
+    private function getMonthlyStats()
+    {
+        $currentYear = now()->year;
+        $months = [];
+        $userCounts = [];
+        $applicationCounts = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $months[] = date('M', mktime(0, 0, 0, $i, 1));
+            $startDate = Carbon::create($currentYear, $i, 1)->startOfMonth();
+            $endDate = Carbon::create($currentYear, $i, 1)->endOfMonth();
+
+            $userCounts[] = User::whereBetween('created_at', [$startDate, $endDate])->count();
+            $applicationCounts[] = JobApplication::whereBetween('created_at', [$startDate, $endDate])->count();
+        }
+
+        return [
+            'months' => $months,
+            'user_counts' => $userCounts,
+            'application_counts' => $applicationCounts,
+        ];
     }
 
     public function users(Request $request)
@@ -217,4 +266,91 @@ class AdminController extends Controller
         
         return back()->with('success', 'Statistics reset successfully!');
     }
+
+    // AdminController.php এর মধ্যে এই methods গুলো যোগ করুন
+
+public function contactMessages(Request $request)
+{
+    $query = ContactMessage::query();
+
+    // Filter by status
+    if ($request->has('status')) {
+        $query->where('status', $request->status);
+    }
+
+    // Search
+    if ($request->has('search')) {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('name', 'LIKE', "%{$search}%")
+              ->orWhere('email', 'LIKE', "%{$search}%")
+              ->orWhere('subject', 'LIKE', "%{$search}%")
+              ->orWhere('message', 'LIKE', "%{$search}%");
+        });
+    }
+
+    // Date filter
+    if ($request->has('date_from') && $request->date_from) {
+        $query->whereDate('created_at', '>=', $request->date_from);
+    }
+
+    if ($request->has('date_to') && $request->date_to) {
+        $query->whereDate('created_at', '<=', $request->date_to);
+    }
+
+    $messages = $query->latest()->paginate(20);
+
+    return view('admin.contact.index', compact('messages'));
+}
+
+public function showContactMessage(ContactMessage $message)
+{
+    // Mark as read when viewing
+    if ($message->status === 'unread') {
+        $message->update(['status' => 'read']);
+    }
+
+    return view('admin.contact.show', compact('message'));
+}
+
+public function updateContactMessage(Request $request, ContactMessage $message)
+{
+    $request->validate([
+        'status' => 'required|in:unread,read,replied,spam',
+        'admin_notes' => 'nullable|string|max:1000'
+    ]);
+
+    $message->update([
+        'status' => $request->status,
+        'admin_notes' => $request->admin_notes
+    ]);
+
+    return redirect()->route('admin.contact.show', $message)
+        ->with('success', 'Message updated successfully!');
+}
+
+public function replyToMessage(Request $request, ContactMessage $message)
+{
+    $request->validate([
+        'reply_message' => 'required|string|max:1000'
+    ]);
+
+    // Here you would implement email sending logic
+    // For now, we'll just mark as replied and save the reply in notes
+    $message->update([
+        'status' => 'replied',
+        'admin_notes' => 'Replied on ' . now()->format('Y-m-d H:i:s') . ': ' . $request->reply_message
+    ]);
+
+    return redirect()->route('admin.contact.show', $message)
+        ->with('success', 'Reply sent successfully!');
+}
+
+public function deleteContactMessage(ContactMessage $message)
+{
+    $message->delete();
+
+    return redirect()->route('admin.contact.index')
+        ->with('success', 'Message deleted successfully!');
+}
 }

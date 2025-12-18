@@ -1,377 +1,390 @@
 @extends('layouts.app')
 
-@section('title', $meta_title)
-@section('meta_description', $meta_description)
-@section('meta_keywords', $meta_keywords)
+@section('title', $meta_title ?? 'Contact Us')
 
 @section('content')
-<!-- Hero Section -->
-<section class="contact-hero bg-gradient-primary py-5 position-relative overflow-hidden">
-    <div class="container position-relative z-1">
-        <div class="row align-items-center">
-            <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-5 fw-bold text-white mb-3">Contact Us</h1>
-                <!-- <p class="lead text-white mb-4">We're here to help and answer any questions you might have. We look forward to hearing from you!</p> -->
-                <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <a href="tel:{{ $contact_phone ?? '' }}" class="btn btn-light btn-lg rounded-pill px-4 shadow-sm">
-                        <i class="fas fa-phone me-2"></i>
-                        Call Now
-                    </a>
-                    <a href="mailto:{{ $contact_email ?? '' }}" class="btn btn-outline-light btn-lg rounded-pill px-4">
-                        <i class="fas fa-envelope me-2"></i>
-                        Send Email
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="position-absolute top-0 start-0 w-100 h-100">
-        <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-10"></div>
-    </div>
-</section>
 
-<!-- Contact Section -->
-<section class="py-5">
-    <div class="container">
-        <div class="row g-4">
-            <!-- Contact Information -->
-            <div class="col-lg-4">
-                <div class="card border-0 shadow-lg h-100">
-                    <div class="card-body p-4">
-                        <h2 class="h4 fw-bold text-primary mb-4">Get in Touch</h2>
+<div class="bg-gradient-light position-relative overflow-hidden">
+    <!-- Background Shape -->
+    <div class="position-absolute top-0 end-0 w-50 h-100 bg-light rounded-start-5"></div>
+    
+    <div class="container position-relative py-5 py-lg-8">
+        <!-- Header -->
+        <div class="text-center mb-6 mb-lg-7">
+            <h1 class="fw-bold display-4 mb-5">Get in Touch</h1>
+            <!-- <p class="lead text-muted mx-auto" style="max-width: 600px;">
+                Have questions about our job portal? We're here to help! Reach out to us using any of the methods below.
+            </p> -->
+        </div>
+
+        <div class="row g-5 align-items-start">
+            
+            <!-- Contact Info Card -->
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-body p-5">
+                        <h3 class="fw-bold mb-5 text-center">Contact Information</h3>
                         
-                        <div class="contact-info">
-                            <!-- Phone -->
-                            <div class="d-flex align-items-start mb-4">
-                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
-                                    <i class="fas fa-phone fa-lg text-primary"></i>
+                        <div class="mb-3 pb-2">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="icon-wrapper bg-primary bg-opacity-10 text-primary rounded-3 p-3 me-3">
+                                    <i class="fas fa-map-marker-alt fs-4"></i>
                                 </div>
                                 <div>
-                                    <h4 class="h6 fw-bold mb-1">Phone Number</h4>
-                                    <p class="mb-0 text-muted">{{ $contact_phone ?? 'Not available' }}</p>
-                                    <small class="text-muted">Mon-Fri 9am-6pm</small>
-                                </div>
-                            </div>
-                            
-                            <!-- Email -->
-                            <div class="d-flex align-items-start mb-4">
-                                <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
-                                    <i class="fas fa-envelope fa-lg text-success"></i>
-                                </div>
-                                <div>
-                                    <h4 class="h6 fw-bold mb-1">Email Address</h4>
-                                    <p class="mb-0 text-muted">{{ $contact_email ?? 'Not available' }}</p>
-                                    <small class="text-muted">We'll reply within 24 hours</small>
-                                </div>
-                            </div>
-                            
-                            <!-- Address -->
-                            <div class="d-flex align-items-start mb-4">
-                                <div class="bg-info bg-opacity-10 p-3 rounded-circle me-3">
-                                    <i class="fas fa-map-marker-alt fa-lg text-info"></i>
-                                </div>
-                                <div>
-                                    <h4 class="h6 fw-bold mb-1">Office Location</h4>
-                                    <p class="mb-0 text-muted">{{ $contact_address ?? 'Not available' }}</p>
-                                    <small class="text-muted">Dhaka, Bangladesh</small>
-                                </div>
-                            </div>
-                            
-                            <!-- Social Links -->
-                            <div class="mt-4 pt-3 border-top">
-                                <h4 class="h6 fw-bold mb-3">Follow Us</h4>
-                                <div class="d-flex gap-2">
-                                    <a href="#" class="btn btn-outline-primary btn-sm rounded-circle p-2">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-outline-info btn-sm rounded-circle p-2">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-outline-primary btn-sm rounded-circle p-2">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-outline-danger btn-sm rounded-circle p-2">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
+                                    <h6 class="fw-semibold mb-1">Office Address</h6>
+                                    <p class="text-muted mb-0">
+                                        {{ $contact_address ?? 'Dhaka, Bangladesh' }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="mb-3 pb-2">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="icon-wrapper bg-success bg-opacity-10 text-success rounded-3 p-3 me-3">
+                                    <i class="fas fa-phone fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-semibold mb-1">Phone Number</h6>
+                                    <p class="text-muted mb-0">
+                                        {{ $contact_phone ?? 'Not available' }}
+                                    </p>
+                                    <small class="text-muted">Mon-Fri, 9AM-6PM</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 pb-2">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="icon-wrapper bg-info bg-opacity-10 text-info rounded-3 p-3 me-3">
+                                    <i class="fas fa-envelope fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-semibold mb-1">Email Address</h6>
+                                    <p class="text-muted mb-0">
+                                        {{ $contact_email ?? 'info@example.com' }}
+                                    </p>
+                                    <!-- <small class="text-muted">We respond within 24 hours</small> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pb-2">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="icon-wrapper bg-warning bg-opacity-10 text-warning rounded-3 p-3 me-3">
+                                    <i class="fas fa-clock fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-semibold mb-1">Business Hours</h6>
+                                    <p class="text-muted mb-0">
+                                        {{ $working_hours ?? 'Monday - Friday, 9:00 AM - 6:00 PM' }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Media Links -->
+                        <div class="mt-2">
+                            <h6 class="fw-semibold mb-3">Follow Us</h6>
+
+                            <div class="d-flex gap-3">
+
+                                @if(!empty($social_links['facebook']))
+                                    <a href="{{ $social_links['facebook'] }}" target="_blank"
+                                    class="btn btn-light btn-icon rounded-circle">
+                                        <i class="fab fa-facebook-f text-primary"></i>
+                                    </a>
+                                @endif
+
+                                @if(!empty($social_links['twitter']))
+                                    <a href="{{ $social_links['twitter'] }}" target="_blank"
+                                    class="btn btn-light btn-icon rounded-circle">
+                                        <i class="fab fa-twitter text-info"></i>
+                                    </a>
+                                @endif
+
+                                @if(!empty($social_links['linkedin']))
+                                    <a href="{{ $social_links['linkedin'] }}" target="_blank"
+                                    class="btn btn-light btn-icon rounded-circle">
+                                        <i class="fab fa-linkedin-in text-primary"></i>
+                                    </a>
+                                @endif
+
+                                @if(!empty($social_links['instagram']))
+                                    <a href="{{ $social_links['instagram'] }}" target="_blank"
+                                    class="btn btn-light btn-icon rounded-circle">
+                                        <i class="fab fa-instagram text-danger"></i>
+                                    </a>
+                                @endif
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            
+
             <!-- Contact Form -->
-            <div class="col-lg-8">
-                <div class="card border-0 shadow-lg">
-                    <div class="card-body p-4 p-lg-5">
-                        <div class="text-center mb-4">
-                            <h2 class="h3 fw-bold text-dark">Send us a Message</h2>
-                            <p class="text-muted mb-0">Fill out the form below and we'll get back to you as soon as possible.</p>
-                        </div>
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-body p-5">
+                        <h3 class="fw-bold mb-4 text-center">Send us a Message</h3>
                         
-                        @if(session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-check-circle me-2"></i>
-                                    <div>{{ session('success') }}</div>
+                        <!-- @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle me-2 fs-5"></i>
+                                <div>
+                                    <strong>Message sent successfully!</strong><br>
+                                    We'll get back to you within 24 hours.
                                 </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
-                        @endif
-                        
-                        <form action="{{ route('contact.submit') }}" method="POST" class="needs-validation" novalidate>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        @endif -->
+
+                        <form action="{{ route('contact.submit') }}" method="POST" id="contactForm">
                             @csrf
-                            
-                            <div class="row g-3">
+
+                            <div class="row g-3 mb-3">
                                 <div class="col-md-6">
-                                    <label for="name" class="form-label fw-semibold">
-                                        <i class="fas fa-user text-primary me-1"></i>
-                                        Full Name *
+                                    <label class="form-label fw-semibold">
+                                        Full Name <span class="text-danger">*</span>
                                     </label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light border-end-0">
                                             <i class="fas fa-user text-muted"></i>
                                         </span>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                                               id="name" name="name" value="{{ old('name') }}" 
+                                        <input type="text" name="name" value="{{ old('name') }}"
+                                               class="form-control @error('name') is-invalid @enderror"
                                                placeholder="Enter your full name" required>
                                         @error('name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-6">
-                                    <label for="email" class="form-label fw-semibold">
-                                        <i class="fas fa-envelope text-primary me-1"></i>
-                                        Email Address *
+                                    <label class="form-label fw-semibold">
+                                        Email Address <span class="text-danger">*</span>
                                     </label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-light border-end-0">
-                                            <i class="fas fa-at text-muted"></i>
+                                            <i class="fas fa-envelope text-muted"></i>
                                         </span>
-                                        <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                                               id="email" name="email" value="{{ old('email') }}" 
-                                               placeholder="Enter your email" required>
+                                        <input type="email" name="email" value="{{ old('email') }}"
+                                               class="form-control @error('email') is-invalid @enderror"
+                                               placeholder="your@email.com" required>
                                         @error('email')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                
-                                <div class="col-12">
-                                    <label for="subject" class="form-label fw-semibold">
-                                        <i class="fas fa-tag text-primary me-1"></i>
-                                        Subject *
-                                    </label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-end-0">
-                                            <i class="fas fa-heading text-muted"></i>
-                                        </span>
-                                        <input type="text" class="form-control @error('subject') is-invalid @enderror" 
-                                               id="subject" name="subject" value="{{ old('subject') }}" 
-                                               placeholder="What is this regarding?" required>
-                                        @error('subject')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                
-                                <div class="col-12">
-                                    <label for="message" class="form-label fw-semibold">
-                                        <i class="fas fa-comment text-primary me-1"></i>
-                                        Your Message *
-                                    </label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light border-end-0 align-items-start pt-3">
-                                            <i class="fas fa-edit text-muted"></i>
-                                        </span>
-                                        <textarea class="form-control @error('message') is-invalid @enderror" 
-                                                  id="message" name="message" rows="6" 
-                                                  placeholder="Please describe your inquiry in detail..." 
-                                                  required>{{ old('message') }}</textarea>
-                                        @error('message')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-text text-end mt-1">
-                                        <span id="charCount">0</span> / 1000 characters
-                                    </div>
-                                </div>
-                                
-                                <div class="col-12">
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" id="agreeTerms" required>
-                                        <label class="form-check-label small text-muted" for="agreeTerms">
-                                            I agree to the <a href="{{ route('terms') }}" class="text-primary">Terms & Conditions</a> 
-                                            and <a href="{{ route('privacy') }}" class="text-primary">Privacy Policy</a>
-                                        </label>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary btn-lg px-5 py-3 w-100">
-                                        <i class="fas fa-paper-plane me-2"></i>
-                                        Send Message
-                                    </button>
-                                </div>
-                                
-                                <div class="col-12 text-center mt-3">
-                                    <p class="small text-muted mb-0">
-                                        <i class="fas fa-clock text-primary me-1"></i>
-                                        Average response time: 24 hours
-                                    </p>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Phone Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="fas fa-phone text-muted"></i>
+                                    </span>
+                                    <input type="tel" name="phone" value="{{ old('phone') }}"
+                                           class="form-control"
+                                           placeholder="+8801XXXXXXXXX">
                                 </div>
                             </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Subject <span class="text-danger">*</span>
+                                </label>
+                                <select name="subject"
+                                        class="form-select @error('subject') is-invalid @enderror" required>
+                                    <option value="">Select a subject</option>
+                                    <option value="General Inquiry" {{ old('subject') == 'General Inquiry' ? 'selected' : '' }}>General Inquiry</option>
+                                    <option value="Job Posting" {{ old('subject') == 'Job Posting' ? 'selected' : '' }}>Job Posting</option>
+                                    <option value="Technical Support" {{ old('subject') == 'Technical Support' ? 'selected' : '' }}>Technical Support</option>
+                                    <option value="Partnership" {{ old('subject') == 'Partnership' ? 'selected' : '' }}>Partnership</option>
+                                    <option value="Feedback" {{ old('subject') == 'Feedback' ? 'selected' : '' }}>Feedback & Suggestions</option>
+                                    <option value="Other" {{ old('subject') == 'Other' ? 'selected' : '' }}>Other</option>
+                                </select>
+                                @error('subject')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    Message <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light align-items-start pt-3 border-end-0">
+                                        <i class="fas fa-comment text-muted"></i>
+                                    </span>
+                                    <textarea name="message" rows="5"
+                                              class="form-control @error('message') is-invalid @enderror"
+                                              placeholder="Please describe your inquiry in detail..."
+                                              required>{{ old('message') }}</textarea>
+                                    @error('message')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-text mt-2">
+                                    Minimum 10 characters required
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100 py-3">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
                         </form>
                     </div>
                 </div>
+
+                <!-- Additional Info -->
+                <!-- <div class="mt-4">
+                    <div class="alert alert-light border rounded-3 mb-0">
+                        <div class="d-flex">
+                            <i class="fas fa-info-circle text-primary me-3 mt-1"></i>
+                            <div>
+                                <h6 class="fw-semibold mb-1">Need Immediate Assistance?</h6>
+                                <p class="mb-0 text-muted">
+                                    For urgent matters, please call us directly at 
+                                    <strong>{{ $settings['contact_phone'] ?? '+8801XXXXXXXXX' }}</strong> 
+                                    during business hours.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
             </div>
         </div>
-        
-        <!-- FAQ Section -->
-        <div class="row mt-5">
+    </div>
+</div>
+
+<!-- Map Section (Optional) -->
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row">
             <div class="col-12">
-                <div class="card border-0 shadow-sm">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                     <div class="card-body p-4">
-                        <h3 class="h4 fw-bold text-center mb-4">Frequently Asked Questions</h3>
-                        <div class="accordion" id="contactFAQ">
-                            <div class="accordion-item border-0">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                        How long does it take to get a response?
-                                    </button>
-                                </h2>
-                                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
-                                    <div class="accordion-body">
-                                        We typically respond to all inquiries within 24 hours during business days.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item border-0">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                        Can I apply for a job through this contact form?
-                                    </button>
-                                </h2>
-                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
-                                    <div class="accordion-body">
-                                        For job applications, please visit our <a href="{{ route('jobs.index') }}" class="text-primary">Jobs page</a> and apply directly to the job postings.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item border-0">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                        Do you have physical office hours?
-                                    </button>
-                                </h2>
-                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
-                                    <div class="accordion-body">
-                                        Our office is open Monday through Friday, from 9:00 AM to 6:00 PM.
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-map-marked-alt text-primary fs-4 me-2"></i>
+                            <h5 class="fw-bold mb-0">Find Our Office</h5>
+                        </div>
+                        <div class="ratio ratio-16x9 bg-light rounded-3 overflow-hidden">
+                            <!-- Google Map Embed (Replace with your actual embed code) -->
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.928572114864!2d90.39313507597564!3d23.750634088240314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8bd552c2b3b%3A0x4e70f117856f0c22!2sBasundhara%20Residential%20Area%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1699790465439!5m2!1sen!2sbd" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                class="w-100 h-100">
+                            </iframe>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+
 @endsection
 
 @push('styles')
 <style>
-    .contact-hero {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    .contact-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-        background-size: cover;
-        background-position: center;
-    }
-    
-    .input-group-text {
-        transition: all 0.3s ease;
-    }
-    
-    .input-group:focus-within .input-group-text {
-        background-color: #e3f2fd !important;
-        border-color: #0d6efd !important;
-    }
-    
-    .form-control:focus {
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
-        border-color: #0d6efd;
-    }
-    
-    .btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-    }
-    
-    .accordion-button:not(.collapsed) {
-        background-color: #f8f9fa;
-        color: #0d6efd;
-        box-shadow: none;
-    }
-    
-    .accordion-button:focus {
-        box-shadow: none;
-        border-color: rgba(0,0,0,.125);
-    }
+.bg-gradient-light {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.icon-wrapper {
+    transition: transform 0.3s ease;
+    min-width: 54px;
+}
+
+.icon-wrapper:hover {
+    transform: translateY(-2px);
+}
+
+.btn-icon {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 0.25rem rgba(77, 171, 247, 0.25);
+}
+
+.alert-success {
+    border-left: 4px solid #28a745;
+}
+
+.ratio-16x9 {
+    --bs-aspect-ratio: calc(9 / 16 * 100%);
+}
+
+/* Form validation styles */
+.is-invalid {
+    border-color: #dc3545;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.invalid-feedback {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+}
 </style>
 @endpush
 
 @push('scripts')
 <script>
-    // Character counter for message
-    const messageTextarea = document.getElementById('message');
-    const charCount = document.getElementById('charCount');
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
     
-    if (messageTextarea && charCount) {
-        messageTextarea.addEventListener('input', function() {
-            const length = this.value.length;
-            charCount.textContent = length;
-            
-            if (length > 1000) {
-                charCount.classList.add('text-danger');
-            } else {
-                charCount.classList.remove('text-danger');
-            }
-        });
+    // Form validation on submit
+    form.addEventListener('submit', function(e) {
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
         
-        // Initialize count
-        charCount.textContent = messageTextarea.value.length;
-    }
+        // Show loading state
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+        submitBtn.disabled = true;
+        
+        // Re-enable after 5 seconds if still processing
+        setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        }, 5000);
+    });
     
-    // Form validation
-    (function () {
-        'use strict'
-        var forms = document.querySelectorAll('.needs-validation')
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
+    // Auto-dismiss success alert after 5 seconds
+    const successAlert = document.querySelector('.alert-success');
+    if (successAlert) {
+        setTimeout(() => {
+            const alert = bootstrap.Alert.getInstance(successAlert);
+            if (alert) {
+                alert.close();
+            }
+        }, 5000);
+    }
+});
 </script>
 @endpush

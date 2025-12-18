@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2025 at 12:53 PM
+-- Generation Time: Dec 18, 2025 at 08:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,7 +38,7 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('job-portal-cache-settings', 'a:16:{s:9:\"site_name\";s:12:\"Job Portal 1\";s:9:\"site_logo\";N;s:12:\"site_favicon\";N;s:13:\"contact_phone\";s:14:\"+8801XXXXXXXXX\";s:13:\"contact_email\";s:16:\"info@example.com\";s:15:\"contact_address\";s:17:\"Dhaka, Bangladesh\";s:16:\"terms_conditions\";s:70:\"<h3>Terms & Conditions</h3><p>Please read these terms carefully...</p>\";s:14:\"privacy_policy\";s:64:\"<h3>Privacy Policy</h3><p>Your privacy is important to us...</p>\";s:8:\"about_us\";s:52:\"<h3>About Us</h3><p>Welcome to our job portal...</p>\";s:12:\"facebook_url\";s:20:\"https://facebook.com\";s:11:\"twitter_url\";s:19:\"https://twitter.com\";s:12:\"linkedin_url\";s:20:\"https://linkedin.com\";s:13:\"instagram_url\";s:21:\"https://instagram.com\";s:10:\"meta_title\";s:32:\"Job Portal - Find Your Dream Job\";s:16:\"meta_description\";s:39:\"Find your dream job with our job portal\";s:13:\"meta_keywords\";s:35:\"job, career, employment, bangladesh\";}', 2081245590);
+('job-portal-cache-settings', 'a:16:{s:9:\"site_name\";s:10:\"Job Portal\";s:9:\"site_logo\";s:54:\"settings/YulRN2nYaUp7klphcJE2in8fVnFPBBwOzARjr0VQ.webp\";s:12:\"site_favicon\";N;s:13:\"contact_phone\";s:14:\"+8801XXXXXXXXX\";s:13:\"contact_email\";s:16:\"info@example.com\";s:15:\"contact_address\";s:17:\"Dhaka, Bangladesh\";s:16:\"terms_conditions\";s:70:\"<h3>Terms & Conditions</h3><p>Please read these terms carefully...</p>\";s:14:\"privacy_policy\";s:64:\"<h3>Privacy Policy</h3><p>Your privacy is important to us...</p>\";s:8:\"about_us\";s:52:\"<h3>About Us</h3><p>Welcome to our job portal...</p>\";s:12:\"facebook_url\";s:20:\"https://facebook.com\";s:11:\"twitter_url\";s:19:\"https://twitter.com\";s:12:\"linkedin_url\";s:20:\"https://linkedin.com\";s:13:\"instagram_url\";s:21:\"https://instagram.com\";s:10:\"meta_title\";s:32:\"Job Portal - Find Your Dream Job\";s:16:\"meta_description\";s:39:\"Find your dream job with our job portal\";s:13:\"meta_keywords\";s:35:\"job, career, employment, bangladesh\";}', 2081312012);
 
 -- --------------------------------------------------------
 
@@ -120,6 +120,34 @@ INSERT INTO `certifications` (`id`, `user_id`, `certification_name`, `issuing_or
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `contact_messages`
+--
+
+CREATE TABLE `contact_messages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `ip_address` varchar(255) DEFAULT NULL,
+  `user_agent` varchar(255) DEFAULT NULL,
+  `status` enum('unread','read','replied','spam') NOT NULL DEFAULT 'unread',
+  `admin_notes` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contact_messages`
+--
+
+INSERT INTO `contact_messages` (`id`, `name`, `email`, `subject`, `message`, `ip_address`, `user_agent`, `status`, `admin_notes`, `created_at`, `updated_at`) VALUES
+(1, 'sagor ali', 'sgrsourov@gmail.com', 'General Inquiry', 'No Problem', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'replied', 'Replied on 2025-12-18 12:57:01: No', '2025-12-18 06:56:20', '2025-12-18 06:57:01'),
+(2, 'sagor ali', 'sgrsourov@gmail.com', 'Job Posting', 'No more today', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'unread', NULL, '2025-12-18 06:59:21', '2025-12-18 06:59:21');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `education`
 --
 
@@ -144,8 +172,8 @@ CREATE TABLE `education` (
 --
 
 INSERT INTO `education` (`id`, `user_id`, `degree`, `institution`, `field_of_study`, `start_year`, `end_year`, `result`, `is_current`, `description`, `sort_order`, `created_at`, `updated_at`) VALUES
-(1, 5, 'BSc', 'National University', 'CSE', '2018', '2022', '3.99', 0, 'very much ok', 0, '2025-12-16 04:13:26', '2025-12-16 04:13:26'),
-(2, 5, 'MSc', 'National University', 'CSE', '2022', '2023', '3.00', 0, 'ok', 0, '2025-12-16 04:15:12', '2025-12-16 04:15:12');
+(1, 5, 'B.Sc.', 'National University', 'CSE', '2018', '2022', '3.99', 0, 'very much ok', 0, '2025-12-16 04:13:26', '2025-12-18 04:51:33'),
+(2, 5, 'M.Sc.', 'National University', 'CSE', '2022', '2023', '3.00', 0, 'ok', 0, '2025-12-16 04:15:12', '2025-12-18 04:51:42');
 
 -- --------------------------------------------------------
 
@@ -235,7 +263,7 @@ CREATE TABLE `job_applications` (
 
 INSERT INTO `job_applications` (`id`, `job_id`, `job_seeker_id`, `cover_letter`, `resume_path`, `status`, `applied_at`, `reviewed_at`, `notes`, `created_at`, `updated_at`) VALUES
 (1, 1, 5, 'kklllllllllhjuuuuuuuuuuuuuuuuuudhsnv skkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkajgrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', 'resumes/EplkIhCnXekZxIcrscbPqW4973e0ApArhaqz9wuV.pdf', 'pending', '2025-12-15 03:58:26', NULL, NULL, '2025-12-15 03:58:26', '2025-12-15 03:58:26'),
-(2, 2, 5, 'I am writing to express my interest in the Developer position at your company. I am a passionate and detail-oriented developer with hands-on experience in building web applications using modern technologies. I enjoy solving real-world problems through clean, efficient, and scalable code.\r\n\r\nI have experience working with technologies such as HTML, CSS, JavaScript, PHP (Laravel), React, and MySQL, and I am familiar with version control systems like Git/GitHub. I have built projects involving authentication, CRUD operations, REST APIs, and responsive user interfaces. These experiences have strengthened my understanding of both frontend and backend development.\r\n\r\nI am always eager to learn new technologies and improve my skills. I can work independently as well as collaboratively in a team environment. I take responsibility for my work and focus on writing maintainable and well-structured code.', 'resumes/LresPp3d654EUhh85Q3OeMYSGbW6O1zVHQHLblzV.pdf', 'shortlisted', '2025-12-15 21:14:28', '2025-12-15 21:16:58', NULL, '2025-12-15 21:14:29', '2025-12-15 21:16:58');
+(2, 2, 5, 'I am writing to express my interest in the Developer position at your company. I am a passionate and detail-oriented developer with hands-on experience in building web applications using modern technologies. I enjoy solving real-world problems through clean, efficient, and scalable code.\r\n\r\nI have experience working with technologies such as HTML, CSS, JavaScript, PHP (Laravel), React, and MySQL, and I am familiar with version control systems like Git/GitHub. I have built projects involving authentication, CRUD operations, REST APIs, and responsive user interfaces. These experiences have strengthened my understanding of both frontend and backend development.\r\n\r\nI am always eager to learn new technologies and improve my skills. I can work independently as well as collaboratively in a team environment. I take responsibility for my work and focus on writing maintainable and well-structured code.', 'resumes/LresPp3d654EUhh85Q3OeMYSGbW6O1zVHQHLblzV.pdf', 'shortlisted', '2025-12-15 21:14:28', '2025-12-18 05:16:50', 'Ok', '2025-12-15 21:14:29', '2025-12-18 05:16:50');
 
 -- --------------------------------------------------------
 
@@ -289,7 +317,7 @@ CREATE TABLE `job_seeker_profiles` (
 --
 
 INSERT INTO `job_seeker_profiles` (`id`, `user_id`, `professional_title`, `summary`, `experience_level`, `preferred_job_title`, `job_type_preference`, `expected_salary`, `preferred_location`, `availability`, `date_of_birth`, `gender`, `languages`, `social_links`, `profile_completion`, `is_public`, `portfolio_website`, `created_at`, `updated_at`) VALUES
-(1, 5, 'Laravel Developer', 'Lorem ipsum dollar sit amet', 'fresher', 'Developer', 'full_time', '50000', 'Dhaka', 'immediate', '2001-08-09', 'male', '[\"English\"]', '{\"github\":\"https:\\/\\/shimzo.xyz\",\"linkedin\":\"https:\\/\\/shimzo.xyz\",\"portfolio\":\"https:\\/\\/shimzo.xyz\"}', 90, 1, 'https://shimzo.xyz', '2025-12-16 04:10:06', '2025-12-16 06:42:16');
+(1, 5, 'Laravel Developer', 'Lorem ipsum dollar sit amet', 'fresher', 'Developer', 'full_time', '50000', 'Dhaka', 'immediate', '2001-08-09', 'male', '[\"English\"]', '{\"github\":\"https:\\/\\/shimzo.xyz\",\"linkedin\":\"https:\\/\\/shimzo.xyz\",\"portfolio\":\"https:\\/\\/shimzo.xyz\"}', 90, 1, 'https://shimzo.xyz', '2025-12-16 04:10:06', '2025-12-18 04:51:22');
 
 -- --------------------------------------------------------
 
@@ -321,7 +349,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2025_12_16_093126_create_certifications_table', 3),
 (12, '2025_12_16_100346_create_education_table', 4),
 (13, '2025_12_16_110840_create_categories_table', 5),
-(14, '2025_12_16_161040_create_settings_table', 6);
+(14, '2025_12_16_161040_create_settings_table', 6),
+(15, '2025_12_17_130342_create_contact_messages_table', 7),
+(16, '2025_12_18_112342_add_profile_picture_to_users_table', 8);
 
 -- --------------------------------------------------------
 
@@ -356,10 +386,14 @@ CREATE TABLE `openjobs` (
 --
 
 INSERT INTO `openjobs` (`id`, `employer_id`, `title`, `description`, `requirements`, `category`, `location`, `job_type`, `salary_min`, `salary_max`, `salary_type`, `deadline`, `vacancy`, `status`, `is_active`, `views`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 3, 'Demo Job 1', 'Lorem ipsum dollor sit amet', '1. demo 1\r\n2. demo 2\r\n3. demo 3', 'Finance', 'Dhaka', 'full_time', 2500.00, 3000.00, 'monthly', '2025-12-31', 2, 'approved', 1, 37, '2025-12-15 21:07:04', '2025-12-16 09:27:39', NULL),
-(2, 3, 'Demo Job 5', 'Lorem ipsum dollar sit amet', 'B.Sc & M.Sc', 'Technology', 'Dhaka', 'full_time', 2000.00, 3000.00, 'monthly', '2025-12-31', 5, 'approved', 1, 11, '2025-12-15 21:07:04', '2025-12-16 09:58:39', NULL),
+(1, 3, 'Demo Job 1', 'Lorem ipsum dollor sit amet', '1. demo 1\r\n2. demo 2\r\n3. demo 3', 'Finance', 'Dhaka', 'full_time', 2500.00, 3000.00, 'monthly', '2025-12-31', 2, 'approved', 1, 39, '2025-12-15 21:07:04', '2025-12-18 07:15:00', NULL),
+(2, 3, 'Demo Job 5', 'Lorem ipsum dollar sit amet', 'B.Sc & M.Sc', 'Technology', 'Dhaka', 'full_time', 2000.00, 3000.00, 'monthly', '2025-12-31', 5, 'approved', 1, 13, '2025-12-15 21:07:04', '2025-12-17 04:38:06', NULL),
 (3, 3, 'Demo job 3', 'Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar', 'BSc', 'Sales', 'Dhaka', 'full_time', 2200.00, 3000.00, 'monthly', '2025-12-31', 10, 'approved', 1, 1, '2025-12-16 09:26:22', '2025-12-16 09:54:29', NULL),
-(4, 3, 'Demo job 2', 'Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar', 'MSc', 'Engineering', 'Dhaka', 'full_time', 22300.00, 30000.00, 'monthly', '2025-12-31', 1, 'approved', 1, 0, '2025-12-16 09:27:27', '2025-12-16 09:28:03', NULL);
+(4, 3, 'Demo job 2', 'Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar Lorem ipsum dolar', 'MSc', 'Engineering', 'Dhaka', 'full_time', 22300.00, 30000.00, 'monthly', '2025-12-31', 1, 'approved', 1, 8, '2025-12-16 09:27:27', '2025-12-17 04:50:31', NULL),
+(5, 3, 'Demo job 7', 'lorem ipsum dolar lorem ipsum dolar lorem ipsum dolar lorem ipsum dolar', 'Bsc', 'Education', 'Dhaka', 'full_time', 50000.00, 60000.00, 'monthly', '2025-12-31', 12, 'approved', 1, 1, '2025-12-17 05:00:30', '2025-12-18 05:44:02', NULL),
+(6, 3, 'Demo Job legal', 'lorem ipsum dolar lorem ipsum dolar lorem ipsum dolar lorem ipsum dolar lorem ipsum dolar', 'M.Sc.', 'Legal', 'Dhaka', 'full_time', 40000.00, 60000.00, 'monthly', '2025-12-31', 5, 'approved', 1, 0, '2025-12-17 05:22:50', '2025-12-17 05:23:47', NULL),
+(7, 3, 'Demo Job legal', 'lorem ipsum dolar lorem ipsum dolar lorem ipsum dolar lorem ipsum dolar lorem ipsum dolar', 'M.Sc.', 'Legal', 'Dhaka', 'full_time', 40000.00, 60000.00, 'monthly', '2025-12-31', 5, 'pending', 1, 0, '2025-12-17 05:22:50', '2025-12-17 05:23:00', '2025-12-17 05:23:00'),
+(8, 3, 'Demo Job 9', 'lorem ipsum dolar lorem ipsum dolar lorem ipsum dolar', 'Masters', 'Design', 'Dhaka', 'full_time', 40000.00, 60000.00, 'monthly', '2025-12-31', 1, 'approved', 1, 10, '2025-12-17 05:23:35', '2025-12-18 07:27:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -441,9 +475,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('sQjc6dQpl7I1c95yV1B5HsAvUrHgzKsqehA8MqSe', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoib2JZNTJtR0RiV2xLdnpCc2FlMmVoanpYVXNNWlFKMjY2UzdmOW13YSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9qb2JzIjtzOjU6InJvdXRlIjtzOjEwOiJqb2JzLmluZGV4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6NTt9', 1765879596),
-('X77AEysZpYoDocH5Mowq2CLv10ostCHxYJOmuaUQ', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaHo0T29uQVJSQnJheG9MaXJiTWpuWno1TGRoQlY1TEI0a2JOdE9QTyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYXNoYm9hcmQiO3M6NToicm91dGUiO3M6OToiZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mzt9', 1765885822),
-('zP3c3I2YWDy6qN5IUIyOQpzv9HXYARsZqhxnmhLF', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiM2I5dzlrSUZYdThyT2tOVnVBcDJxdk5zeXI1R0VXa0hlNkU3dk5EWCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjM2OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vc2V0dGluZ3MiO3M6NToicm91dGUiO3M6MjA6ImFkbWluLnNldHRpbmdzLmluZGV4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mjt9', 1765885956);
+('2B7rDLpjfjXQ6mxK35QUJPO5GbZffqkfRygaYLpy', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWkhnd0U5NE0xaFFlUkJET1NnTGg2Z0Jtakt1a1A1Y2FHMXhuT3JMSSI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjMyOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vam9icyI7czo1OiJyb3V0ZSI7czoxMDoiYWRtaW4uam9icyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7fQ==', 1766042857),
+('Fz8aM8g5KGQInUQTocC7PcCTxSZNadLcWvAGpxKz', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZFE3dm9BMTB1QXhKcjBpM3prZTFWNGVTeTY4d2NheUZudm95MHNMNSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYXNoYm9hcmQiO3M6NToicm91dGUiO3M6OToiZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mzt9', 1766036850),
+('gHHcpnCaX2T24WtIQSBuusqjsdbaCRC8e7AbWKD7', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiY0htYXd4VlZnZGREc0x0Zk9rbWpmQlIxVUV5TVVJZ0lYNlQ5b2xGUiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6NTt9', 1766042962);
 
 -- --------------------------------------------------------
 
@@ -468,8 +502,8 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `key`, `value`, `type`, `group`, `description`, `order`, `created_at`, `updated_at`) VALUES
-(1, 'site_name', 'Job Portal 1', 'text', 'general', 'Website Name', 1, NULL, '2025-12-16 11:45:39'),
-(2, 'site_logo', NULL, 'image', 'general', 'Website Logo', 2, NULL, NULL),
+(1, 'site_name', 'Job Portal', 'text', 'general', 'Website Name', 1, NULL, '2025-12-17 04:04:22'),
+(2, 'site_logo', 'settings/YulRN2nYaUp7klphcJE2in8fVnFPBBwOzARjr0VQ.webp', 'image', 'general', 'Website Logo', 2, NULL, '2025-12-17 06:13:11'),
 (3, 'site_favicon', NULL, 'image', 'general', 'Website Favicon', 3, NULL, NULL),
 (4, 'contact_phone', '+8801XXXXXXXXX', 'phone', 'contact', 'Contact Phone Number', 4, NULL, NULL),
 (5, 'contact_email', 'info@example.com', 'email', 'contact', 'Contact Email Address', 5, NULL, NULL),
@@ -501,6 +535,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `role` enum('admin','employer','job_seeker') NOT NULL DEFAULT 'job_seeker',
+  `profile_picture` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `address` text DEFAULT NULL,
   `company_name` varchar(255) DEFAULT NULL,
@@ -517,14 +552,14 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `phone`, `address`, `company_name`, `website`, `industry`, `resume_path`, `skills`, `experience`, `education`, `is_active`) VALUES
-(1, 'Test User', 'test@example.com', '2025-12-15 02:29:32', '$2y$12$MrdNMf2ISSBszQH5yDklq.0urtoBvPLvb8iTMmAF//VKL3X6ZEU0G', 'ivVbNC1QrN', '2025-12-15 02:29:32', '2025-12-15 02:29:32', 'job_seeker', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(2, 'Admin User', 'admin@gmail.com', '2025-12-15 02:30:47', '$2y$12$7fdDkYRfZTi7jYxZat7RV./T5FRrOyz8AJRPvTXT0Kjp9fueJ4Ndi', NULL, '2025-12-15 02:30:47', '2025-12-15 21:10:38', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(3, 'Tech Solutions Inc.', 'employer@gmail.com', '2025-12-15 02:30:47', '$2y$12$FG5lZ1.0d0OQoIkoetzIOe7C.suRCMrdOQR7EaSznrjoStGUuIByW', NULL, '2025-12-15 02:30:47', '2025-12-15 21:05:44', 'employer', '+1 234 567 8900', NULL, 'Tech Solutions Inc.', 'https://techsolutions.com', 'Information Technology', NULL, NULL, NULL, NULL, 1),
-(4, 'John Doe', 'john@example.com', '2025-12-15 02:30:47', '$2y$12$/2CBPSQS75nnOxRGqBusSuPegq05u3uj81VXtWHhrx5kRTV1aDr.G', NULL, '2025-12-15 02:30:47', '2025-12-15 02:30:47', 'job_seeker', '+1 234 567 8901', NULL, NULL, NULL, NULL, NULL, '\"[\\\"PHP\\\",\\\"Laravel\\\",\\\"MySQL\\\",\\\"JavaScript\\\"]\"', '5 years of web development experience', 'Bachelor of Computer Science', 1),
-(5, 'Tonmoy Mirza', 'abc@gmail.com', NULL, '$2y$12$zGa5zdy.chBlJJaVLQogg.Cbu5Vh758OzZlE3s3VhqPGySMaMYUoe', NULL, '2025-12-15 02:35:53', '2025-12-16 03:18:49', 'job_seeker', '01949854504', NULL, NULL, NULL, NULL, 'resumes/mJlH2hhLbdK84No2cTGSEpXNL98hL0IxQsYXIQYg.pdf', NULL, NULL, NULL, 1),
-(6, 'Admin User', 'admin@jobportal.com', '2025-12-16 05:15:41', '$2y$12$44nfWIkY83LjT.inB3F8Ne/zPq3vtFY7rt4K0Ckv3Lmo2aGIznyPm', NULL, '2025-12-16 05:15:41', '2025-12-16 05:15:41', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-(7, 'Tech Solutions Inc.', 'employer@tech.com', '2025-12-16 05:15:41', '$2y$12$jj8JRoZ2UCOJtABrMCuQdOwug0oY0BrHBTqthQn3SzdM.Ljd9em0a', NULL, '2025-12-16 05:15:41', '2025-12-16 05:15:41', 'employer', '+1 234 567 8900', NULL, 'Tech Solutions Inc.', 'https://techsolutions.com', 'Information Technology', NULL, NULL, NULL, NULL, 1);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `profile_picture`, `phone`, `address`, `company_name`, `website`, `industry`, `resume_path`, `skills`, `experience`, `education`, `is_active`) VALUES
+(1, 'Test User', 'test@example.com', '2025-12-15 02:29:32', '$2y$12$MrdNMf2ISSBszQH5yDklq.0urtoBvPLvb8iTMmAF//VKL3X6ZEU0G', 'ivVbNC1QrN', '2025-12-15 02:29:32', '2025-12-15 02:29:32', 'job_seeker', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(2, 'Admin User', 'admin@gmail.com', '2025-12-15 02:30:47', '$2y$12$7fdDkYRfZTi7jYxZat7RV./T5FRrOyz8AJRPvTXT0Kjp9fueJ4Ndi', NULL, '2025-12-15 02:30:47', '2025-12-15 21:10:38', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(3, 'Tech Solutions Inc.', 'employer@gmail.com', '2025-12-15 02:30:47', '$2y$12$zGa5zdy.chBlJJaVLQogg.Cbu5Vh758OzZlE3s3VhqPGySMaMYUoe', NULL, '2025-12-15 02:30:47', '2025-12-15 21:05:44', 'employer', NULL, '019XXXXXXXX', NULL, 'Tech Solutions Inc.', 'https://techsolutions.com', 'Information Technology', NULL, NULL, NULL, NULL, 1),
+(4, 'John Doe', 'john@example.com', '2025-12-15 02:30:47', '$2y$12$/2CBPSQS75nnOxRGqBusSuPegq05u3uj81VXtWHhrx5kRTV1aDr.G', NULL, '2025-12-15 02:30:47', '2025-12-15 02:30:47', 'job_seeker', NULL, '019XXXXXXXX', NULL, NULL, NULL, NULL, NULL, '\"[\\\"PHP\\\",\\\"Laravel\\\",\\\"MySQL\\\",\\\"JavaScript\\\"]\"', '5 years of web development experience', 'Bachelor of Computer Science', 1),
+(5, 'Tonmoy Mirza', 'abc@gmail.com', NULL, '$2y$12$zGa5zdy.chBlJJaVLQogg.Cbu5Vh758OzZlE3s3VhqPGySMaMYUoe', NULL, '2025-12-15 02:35:53', '2025-12-18 05:35:57', 'job_seeker', 'profile_pictures/profile_5_1766036157.png', '019XXXXXXXX', NULL, NULL, NULL, NULL, 'resumes/mJlH2hhLbdK84No2cTGSEpXNL98hL0IxQsYXIQYg.pdf', NULL, NULL, NULL, 1),
+(6, 'Admin User', 'admin@jobportal.com', '2025-12-16 05:15:41', '$2y$12$44nfWIkY83LjT.inB3F8Ne/zPq3vtFY7rt4K0Ckv3Lmo2aGIznyPm', NULL, '2025-12-16 05:15:41', '2025-12-16 05:15:41', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+(7, 'Tech Solutions Inc.', 'employer@tech.com', '2025-12-16 05:15:41', '$2y$12$jj8JRoZ2UCOJtABrMCuQdOwug0oY0BrHBTqthQn3SzdM.Ljd9em0a', NULL, '2025-12-16 05:15:41', '2025-12-16 05:15:41', 'employer', NULL, '019XXXXXXXX', NULL, 'Tech Solutions Inc.', 'https://techsolutions.com', 'Information Technology', NULL, NULL, NULL, NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -555,6 +590,12 @@ ALTER TABLE `categories`
 ALTER TABLE `certifications`
   ADD PRIMARY KEY (`id`),
   ADD KEY `certifications_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `education`
@@ -680,6 +721,12 @@ ALTER TABLE `certifications`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `education`
 --
 ALTER TABLE `education`
@@ -719,13 +766,13 @@ ALTER TABLE `job_seeker_profiles`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `openjobs`
 --
 ALTER TABLE `openjobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`

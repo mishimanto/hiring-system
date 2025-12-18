@@ -98,6 +98,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
         Route::post('/settings/clear-cache', [SettingController::class, 'clearCache'])->name('settings.clear-cache');
     });
+
+    // Contact Messages Routes
+    Route::prefix('admin/contact')->name('admin.contact.')->group(function () {
+        Route::get('/', [AdminController::class, 'contactMessages'])->name('index');
+        Route::get('/{message}', [AdminController::class, 'showContactMessage'])->name('show');
+        Route::put('/{message}', [AdminController::class, 'updateContactMessage'])->name('update');
+        Route::post('/{message}/reply', [AdminController::class, 'replyToMessage'])->name('reply');
+        Route::delete('/{message}', [AdminController::class, 'deleteContactMessage'])->name('destroy');
+    });
 });
 
 // Job Seeker Profile Routes
@@ -167,6 +176,12 @@ Route::middleware(['auth', 'role:job_seeker'])->group(function () {
         // Profile Completion
         Route::get('/completion', [JobSeekerProfileController::class, 'getCompletion'])
             ->name('job-seeker.profile.completion');
+        Route::post('/job-seeker/profile/picture', [JobSeekerProfileController::class, 'updateProfilePicture'])
+            ->name('job-seeker.profile.picture.update');
+        Route::delete('/job-seeker/profile/picture', [JobSeekerProfileController::class, 'removeProfilePicture'])
+            ->name('job-seeker.profile.picture.remove');
+        Route::get('/job-seeker/profile/picture', [JobSeekerProfileController::class, 'getProfilePicture'])
+            ->name('job-seeker.profile.picture.get');    
     });
 });
 
@@ -184,3 +199,6 @@ Route::get('/terms', [PageController::class, 'terms'])->name('terms');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
+
+Route::get('/jobs/category/{slug}', [\App\Http\Controllers\JobController::class, 'category'])
+    ->name('jobs.by.category');

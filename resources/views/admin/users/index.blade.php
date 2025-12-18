@@ -5,7 +5,7 @@
 @section('page-title', 'Manage Users')
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+    <!-- <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li> -->
     <li class="breadcrumb-item active">Users</li>
 @endsection
 
@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">All Users ({{ $users->total() }})</h6>
+                    <h6 class="m-0 font-weight-bold text-primary me-2">All Users ({{ $users->total() }})</h6>
                     <div>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#filterModal">
                             <i class="fas fa-filter me-1"></i>Filters

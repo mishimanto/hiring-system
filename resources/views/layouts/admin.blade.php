@@ -229,7 +229,7 @@
         }
 
         .badge-nav {
-            background: var(--primary);
+            background: lightcoral;
             color: var(--white);
             font-size: 0.7rem;
             padding: 3px 8px;
@@ -1023,6 +1023,19 @@
                 <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.index*') ? 'active' : '' }}">
                     <!-- <i class="nav-icon fas fa-cogs"></i> -->
                     <span class="nav-text">Settings</span>
+                </a>
+            </li>
+            <!-- Contact Messages Link -->
+            <li class="nav-item {{ request()->is('admin/contact*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.contact.index') }}">
+                    <!-- <i class="fas fa-envelope me-2"></i> -->
+                    <span class="nav-text">Contact Messages</span>
+                    @php
+                        $unreadCount = \App\Models\ContactMessage::unread()->count();
+                    @endphp
+                    @if($unreadCount > 0)
+                        <span class="badge-nav">{{ $unreadCount }}</span>
+                    @endif
                 </a>
             </li>
         </ul>

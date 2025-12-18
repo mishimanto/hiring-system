@@ -85,19 +85,24 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
-                            <h1 class="h3 mb-2">{{ $openjob->title }}</h1>
+                            <h1 class="h3 mb-2 text-primary">{{ $openjob->title }}</h1>
                             <h2 class="h6 text-muted">
                                 {{ $openjob->employer->company_name ?? $openjob->employer->name }}
                             </h2>
                         </div>
 
-                        @if($openjob->status === 'approved')
+                        <small class="text-muted">
+                            <i class="fas fa-clock me-1"></i>
+                            Posted {{ $openjob->created_at?->diffForHumans() }}
+                        </small>
+
+                        <!-- @if($openjob->status === 'approved')
                             <span class="badge bg-success">Approved</span>
                         @elseif($openjob->status === 'pending')
                             <span class="badge bg-warning">Pending</span>
                         @else
                             <span class="badge bg-danger">Rejected</span>
-                        @endif
+                        @endif -->
                     </div>
 
                     <div class="row mb-4 job-meta">
@@ -128,11 +133,6 @@
                             {!! nl2br(e($openjob->requirements)) !!}
                         </div>
                     </div>
-
-                    <small class="text-muted">
-                        <i class="fas fa-clock me-1"></i>
-                        Posted {{ $openjob->created_at?->diffForHumans() }}
-                    </small>
                 </div>
             </div>
 
@@ -188,23 +188,23 @@
             </div>
 
             @auth
-    @if(auth()->user()->isJobSeeker())
-        <!-- Apply Section -->
-        <div class="card sidebar-card">
-            <div class="card-header">Apply for this Job</div>
-            <div class="card-body">
-                @if($hasApplied)
-                    <div class="alert alert-info">You already applied.</div>
-                    <a href="{{ route('applications.index') }}" class="btn btn-primary w-100">View Applications</a>
-                @else
-                    <button class="btn btn-primary w-100 apply-btn" data-bs-toggle="modal" data-bs-target="#applyModal">
-                        <i class="fas fa-paper-plane me-2"></i>Apply Now
-                    </button>
+                @if(auth()->user()->isJobSeeker())
+                    <!-- Apply Section -->
+                    <div class="card sidebar-card">
+                        <div class="card-header">Apply for this Job</div>
+                        <div class="card-body">
+                            @if($hasApplied)
+                                <div class="alert alert-info">You already applied.</div>
+                                <a href="{{ route('applications.index') }}" class="btn btn-primary w-100">View Applications</a>
+                            @else
+                                <button class="btn btn-primary w-100 apply-btn" data-bs-toggle="modal" data-bs-target="#applyModal">
+                                    <i class="fas fa-paper-plane me-2"></i>Apply Now
+                                </button>
+                            @endif
+                        </div>
+                    </div>
                 @endif
-            </div>
-        </div>
-    @endif
-@endauth
+            @endauth
 
 
             <!-- Quick Stats -->

@@ -295,7 +295,7 @@
         background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
         border: none;
         border-radius: 12px;
-        padding: 0 32px;
+        padding:  32px;
         font-size: 1.1rem;
         font-weight: 600;
         color: white;
@@ -573,7 +573,7 @@
 
     /* Categories Section */
     .categories-section {
-        padding: 120px 0;
+        padding: 120px 0 40px 0;
         background: var(--light);
     }
 
@@ -1341,10 +1341,8 @@
             <div class="stat-card animate-on-scroll">
                 <div class="stat-number">
                     @php
-                        // OpenJob মডেল import করুন
                         use App\Models\OpenJob;
                         
-                        // যদি $activeJobsCount না আসে তাহলে manually count করুন
                         $actualCount = $activeJobsCount ?? OpenJob::where('status', 'approved')
                             ->where('is_active', 1)
                             ->whereDate('deadline', '>=', now()->format('Y-m-d'))
@@ -1378,55 +1376,64 @@
 </section>
 
 <!-- Testimonials Section -->
-<section class="testimonials-section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Success Stories</h2>
-            <p class="section-subtitle">Hear from professionals who transformed their careers with CareerHub</p>
-        </div>
-        
-        <div class="testimonials-grid">
-            <div class="testimonial-card animate-on-scroll">
+<div class="swiper testimonials-slider p-5">
+    <div class="swiper-wrapper">
+
+        <!-- Slide 1 -->
+        <div class="swiper-slide">
+            <div class="testimonial-card">
                 <div class="testimonial-content">
                     <div class="quote-icon">
                         <i class="fas fa-quote-right"></i>
                     </div>
-                    <p class="testimonial-text">"CareerHub completely changed my career trajectory. Within two weeks of using the platform, I landed interviews with three top tech companies and ultimately accepted my dream role."</p>
+                    <p class="testimonial-text">
+                        "CareerHub completely changed my career trajectory..."
+                    </p>
                 </div>
                 <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Sarah Johnson" class="author-avatar">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786" class="author-avatar">
                     <div class="author-info">
                         <h4>Sarah Johnson</h4>
                         <div class="author-title">Senior Software Engineer</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="testimonial-card animate-on-scroll">
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="swiper-slide">
+            <div class="testimonial-card">
                 <div class="testimonial-content">
                     <div class="quote-icon">
                         <i class="fas fa-quote-right"></i>
                     </div>
-                    <p class="testimonial-text">"As a hiring manager, I've found CareerHub to be invaluable. The quality of candidates is exceptional, and we've hired three key team members through the platform in just one quarter."</p>
+                    <p class="testimonial-text">
+                        "As a hiring manager, I've found CareerHub invaluable..."
+                    </p>
                 </div>
                 <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Michael Chen" class="author-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" class="author-avatar">
                     <div class="author-info">
                         <h4>Michael Chen</h4>
                         <div class="author-title">Marketing Director</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="testimonial-card animate-on-scroll">
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="swiper-slide">
+            <div class="testimonial-card">
                 <div class="testimonial-content">
                     <div class="quote-icon">
                         <i class="fas fa-quote-right"></i>
                     </div>
-                    <p class="testimonial-text">"The personalized job recommendations and career guidance helped me transition from freelance to a full-time role. The platform truly understands what employers are looking for."</p>
+                    <p class="testimonial-text">
+                        "The personalized job recommendations helped me..."
+                    </p>
                 </div>
                 <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Jessica Williams" class="author-avatar">
+                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f" class="author-avatar">
                     <div class="author-info">
                         <h4>Jessica Williams</h4>
                         <div class="author-title">Product Designer</div>
@@ -1434,8 +1441,33 @@
                 </div>
             </div>
         </div>
+
+        <div class="swiper-slide">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "The personalized job recommendations helped me..."
+                    </p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f" class="author-avatar">
+                    <div class="author-info">
+                        <h4>Jessica Williams</h4>
+                        <div class="author-title">Product Designer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-</section>
+
+    <!-- Pagination dots -->
+    <div class="swiper-pagination"></div>
+</div>
+
 
 <!-- CTA Section -->
 <section class="cta-section">
@@ -1472,6 +1504,30 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+new Swiper(".testimonials-slider", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,
+    },
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+    breakpoints: {
+        768: {
+            slidesPerView: 2,
+        },
+        1200: {
+            slidesPerView: 3,
+        }
+    }
+});
+</script>
+
 <script>
     // Initialize Hero Swiper with smooth transitions
     document.addEventListener('DOMContentLoaded', function() {

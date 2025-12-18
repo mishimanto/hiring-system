@@ -103,7 +103,7 @@
                                 </p>
                                 <div class="mb-2">
                                     <span class="badge bg-secondary me-1">{{ $job->category }}</span>
-                                    <span class="badge bg-info">{{ $job->vacancy }} position(s)</span>
+                                    <span class="badge bg-info">Position: {{ $job->vacancy }}</span>
                                 </div>
                             </div>
                             <div class="col-md-4 text-end">
@@ -119,7 +119,7 @@
                                 </div>
                                 @if($job->deadline->isFuture())
                                     <div class="mb-2">
-                                        <small class="text-muted">Apply before: {{ $job->deadline->format('M d, Y') }}</small>
+                                        <small class="text-muted">Deadline: {{ $job->deadline->format('M d, Y') }}</small>
                                     </div>
                                 @else
                                     <span class="badge bg-danger">Expired</span>

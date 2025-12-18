@@ -9,15 +9,65 @@
         <div class="col-lg-3 mb-4">
             <div class="card shadow-sm border-0">
                 <div class="card-body text-center p-4">
-                    <!-- Profile Picture -->
+                    <!-- Profile Picture with Upload Option -->
                     <div class="mb-4">
                         <div class="position-relative d-inline-block">
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=4e73df&color=fff&size=120&bold=true" 
-                                 alt="Profile" class="rounded-circle shadow" width="120" height="120">
-                            <span class="position-absolute bottom-0 end-0 bg-success rounded-circle p-2 border border-3 border-white">
+                            <!-- Profile Picture -->
+                            <div id="profile-picture-container">
+                                @if(Auth::user()->profile_picture)
+                                    <img id="profile-picture-img" 
+                                        src="{{ Storage::url(Auth::user()->profile_picture) }}" 
+                                        alt="Profile" 
+                                        class="rounded-circle shadow" 
+                                        width="120" 
+                                        height="120"
+                                        style="object-fit: cover;">
+                                @else
+                                    <img id="profile-picture-img" 
+                                        src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=4e73df&color=fff&size=120&bold=true" 
+                                        alt="Profile" 
+                                        class="rounded-circle shadow" 
+                                        width="120" 
+                                        height="120">
+                                @endif
+                            </div>
+                            
+                            <!-- Upload Button -->
+                            <span id="upload-profile-picture" 
+                                class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-2 border border-3 border-white d-flex align-items-center justify-content-center"
+                                style="cursor: pointer; width: 36px; height: 36px;"
+                                data-bs-toggle="tooltip" 
+                                data-bs-placement="top" 
+                                title="Change profile picture">
+                                <i class="fas fa-camera text-white" style="font-size: 14px;"></i>
+                            </span>
+                            
+                            <!-- Verified Badge -->
+                            <span class="position-absolute bottom-0 start-0 bg-success rounded-circle p-2 border border-3 border-white d-flex align-items-center justify-content-center"
+                                style="width: 36px; height: 36px;">
                                 <i class="fas fa-check text-white" style="font-size: 12px;"></i>
                             </span>
                         </div>
+                        
+                        <!-- Profile Picture Upload Form (Hidden) -->
+                        <form id="profile-picture-form" method="POST" enctype="multipart/form-data" style="display: none;">
+                            @csrf
+                            <input type="file" 
+                                   id="profile-picture-input" 
+                                   name="profile_picture" 
+                                   accept="image/*"
+                                   class="form-control d-none">
+                        </form>
+                        
+                        <!-- Remove Button (Only show if has picture) -->
+                        @if(Auth::user()->profile_picture)
+                        <div class="mt-2">
+                            <button id="remove-profile-picture" 
+                                    class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash-alt me-1"></i> Remove Photo
+                            </button>
+                        </div>
+                        @endif
                     </div>
                     
                     <!-- Name and Title -->
@@ -90,7 +140,7 @@
             </div>
             
             <!-- Skills Card -->
-            <div class="card shadow-sm border-0 mt-4">
+            <!-- <div class="card shadow-sm border-0 mt-4">
                 <div class="card-header bg-white border-0 py-3">
                     <h6 class="mb-0">
                         <i class="fas fa-code me-2 text-primary"></i>
@@ -118,7 +168,7 @@
                         <i class="fas fa-plus me-1"></i> Add More Skills
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
         
         <!-- Main Content -->
@@ -137,7 +187,7 @@
                                 @endif
                             </p>
                         </div>
-                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                        <!-- <div class="col-md-4 text-md-end mt-3 mt-md-0">
                             <div class="d-grid gap-2">
                                 <a href="{{ route('jobs.index') }}" class="btn btn-primary btn-lg">
                                     <i class="fas fa-search me-2"></i> Browse Jobs
@@ -146,7 +196,7 @@
                                     <i class="fas fa-user-edit me-2"></i> Edit Profile
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -445,14 +495,52 @@
     </div>
 </div>
 
+<!-- Profile Picture Upload Modal -->
+<div class="modal fade" id="profilePictureModal" tabindex="-1" aria-labelledby="profilePictureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profilePictureModalLabel">Upload Profile Picture</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-4">
+                    <div id="image-preview" class="mb-3">
+                        <img id="preview-img" src="" alt="Preview" class="img-fluid rounded-circle" style="max-width: 200px; display: none;">
+                    </div>
+                    <div id="upload-area" class="border-dashed p-5 text-center">
+                        <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                        <h5>Drop your image here</h5>
+                        <p class="text-muted">or click to browse</p>
+                        <input type="file" id="modal-profile-picture-input" accept="image/*" class="form-control d-none">
+                        <button class="btn btn-primary mt-2" onclick="document.getElementById('modal-profile-picture-input').click()">
+                            <i class="fas fa-folder-open me-2"></i> Choose File
+                        </button>
+                    </div>
+                    <small class="text-muted d-block mt-3">
+                        Supported formats: JPG, PNG, GIF<br>
+                        Max file size: 2MB
+                    </small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" id="upload-profile-picture-btn" class="btn btn-primary" disabled>
+                    <i class="fas fa-upload me-2"></i> Upload Photo
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @push('styles')
 <style>
     .card {
         transition: transform 0.2s;
     }
-    .card:hover {
+    /* .card:hover {
         transform: translateY(-5px);
-    }
+    } */
     .progress-bar {
         border-radius: 10px;
     }
@@ -469,12 +557,39 @@
     .bg-gradient-primary {
         background: linear-gradient(45deg, #4e73df, #224abe);
     }
+    .border-dashed {
+        border: 2px dashed #dee2e6;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        cursor: pointer;
+    }
+    .border-dashed:hover {
+        background-color: #e9ecef;
+        border-color: #adb5bd;
+    }
+    #profile-picture-container {
+        position: relative;
+    }
+    #upload-profile-picture:hover {
+        background-color: #224abe;
+    }
+    #preview-img {
+        max-height: 300px;
+        object-fit: cover;
+    }
 </style>
 @endpush
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    
     // Profile completion alert
     @if(Auth::user()->jobSeekerProfile && Auth::user()->jobSeekerProfile->profile_completion < 50)
         const alertHTML = `
@@ -494,7 +609,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         
-        // Insert at the beginning of main content
         document.querySelector('.col-lg-9').insertAdjacentHTML('afterbegin', alertHTML);
     @endif
     
@@ -506,6 +620,221 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             progressBar.style.width = width;
         }, 300);
+    }
+    
+    // Profile picture upload functionality
+    const uploadBtn = document.getElementById('upload-profile-picture');
+    const removeBtn = document.getElementById('remove-profile-picture');
+    const modalProfilePictureInput = document.getElementById('modal-profile-picture-input');
+    const uploadProfilePictureBtn = document.getElementById('upload-profile-picture-btn');
+    const previewImg = document.getElementById('preview-img');
+    const imagePreview = document.getElementById('image-preview');
+    const uploadArea = document.getElementById('upload-area');
+    let selectedFile = null;
+    
+    // Open modal on camera icon click
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', function() {
+            const modal = new bootstrap.Modal(document.getElementById('profilePictureModal'));
+            modal.show();
+        });
+    }
+    
+    // Handle file selection in modal
+    if (modalProfilePictureInput) {
+        modalProfilePictureInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                selectedFile = e.target.files[0];
+                
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                    uploadArea.style.display = 'none';
+                    uploadProfilePictureBtn.disabled = false;
+                };
+                reader.readAsDataURL(selectedFile);
+            }
+        });
+    }
+    
+    // Handle drag and drop
+    if (uploadArea) {
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#4e73df';
+            this.style.backgroundColor = '#e9ecef';
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#dee2e6';
+            this.style.backgroundColor = '#f8f9fa';
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#dee2e6';
+            this.style.backgroundColor = '#f8f9fa';
+            
+            if (e.dataTransfer.files.length > 0) {
+                selectedFile = e.dataTransfer.files[0];
+                modalProfilePictureInput.files = e.dataTransfer.files;
+                
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                    uploadArea.style.display = 'none';
+                    uploadProfilePictureBtn.disabled = false;
+                };
+                reader.readAsDataURL(selectedFile);
+            }
+        });
+    }
+    
+    // Upload profile picture
+    if (uploadProfilePictureBtn) {
+        uploadProfilePictureBtn.addEventListener('click', function() {
+            if (!selectedFile) return;
+            
+            const formData = new FormData();
+            formData.append('profile_picture', selectedFile);
+            formData.append('_token', '{{ csrf_token() }}');
+            
+            // Show loading state
+            const originalText = uploadProfilePictureBtn.innerHTML;
+            uploadProfilePictureBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Uploading...';
+            uploadProfilePictureBtn.disabled = true;
+            
+            // Upload via AJAX
+            axios.post('{{ route("job-seeker.profile.picture.update") }}', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(response => {
+                // Update profile picture in UI
+                const profilePictureImg = document.getElementById('profile-picture-img');
+                if (profilePictureImg) {
+                    profilePictureImg.src = response.data.image_url + '?' + new Date().getTime();
+                }
+                
+                // Show success message
+                showToast('Success', response.data.message, 'success');
+                
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('profilePictureModal'));
+                modal.hide();
+                
+                // Reset modal
+                resetModal();
+                
+                // Show remove button if not already shown
+                if (removeBtn) {
+                    removeBtn.style.display = 'block';
+                } else {
+                    // Create remove button if it doesn't exist
+                    const removeBtnContainer = document.querySelector('.mt-2');
+                    if (removeBtnContainer) {
+                        removeBtnContainer.innerHTML = `
+                            <button id="remove-profile-picture" class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash-alt me-1"></i> Remove Photo
+                            </button>
+                        `;
+                        // Add event listener to new remove button
+                        document.getElementById('remove-profile-picture').addEventListener('click', removeProfilePicture);
+                    }
+                }
+            })
+            .catch(error => {
+                let errorMessage = 'An error occurred while uploading the image.';
+                if (error.response && error.response.data && error.response.data.message) {
+                    errorMessage = error.response.data.message;
+                }
+                showToast('Error', errorMessage, 'danger');
+            })
+            .finally(() => {
+                // Reset button
+                uploadProfilePictureBtn.innerHTML = originalText;
+                uploadProfilePictureBtn.disabled = false;
+            });
+        });
+    }
+    
+    // Remove profile picture
+    function removeProfilePicture() {
+        if (!confirm('Are you sure you want to remove your profile picture?')) return;
+        
+        // Show loading state
+        const originalText = this.innerHTML;
+        this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Removing...';
+        this.disabled = true;
+        
+        axios.delete('{{ route("job-seeker.profile.picture.remove") }}')
+            .then(response => {
+                // Update profile picture to default
+                const profilePictureImg = document.getElementById('profile-picture-img');
+                if (profilePictureImg) {
+                    const name = '{{ urlencode(Auth::user()->name) }}';
+                    profilePictureImg.src = `https://ui-avatars.com/api/?name=${name}&background=4e73df&color=fff&size=120&bold=true`;
+                }
+                
+                // Hide remove button
+                this.style.display = 'none';
+                
+                showToast('Success', response.data.message, 'success');
+            })
+            .catch(error => {
+                showToast('Error', 'Failed to remove profile picture.', 'danger');
+                this.innerHTML = originalText;
+                this.disabled = false;
+            });
+    }
+    
+    // Add event listener to remove button if exists
+    if (removeBtn) {
+        removeBtn.addEventListener('click', removeProfilePicture);
+    }
+    
+    // Reset modal
+    function resetModal() {
+        selectedFile = null;
+        previewImg.src = '';
+        previewImg.style.display = 'none';
+        uploadArea.style.display = 'block';
+        uploadProfilePictureBtn.disabled = true;
+        modalProfilePictureInput.value = '';
+    }
+    
+    // Toast notification function
+    function showToast(title, message, type) {
+        const toastHTML = `
+            <div class="toast align-items-center text-bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <strong>${title}:</strong> ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        `;
+        
+        const toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        toastContainer.style.zIndex = '1055';
+        toastContainer.innerHTML = toastHTML;
+        document.body.appendChild(toastContainer);
+        
+        const toast = new bootstrap.Toast(toastContainer.querySelector('.toast'));
+        toast.show();
+        
+        // Remove toast after hiding
+        toastContainer.addEventListener('hidden.bs.toast', function () {
+            document.body.removeChild(toastContainer);
+        });
     }
 });
 </script>

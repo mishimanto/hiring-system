@@ -5,7 +5,6 @@
 @section('page-title', 'Manage Jobs')
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
     <li class="breadcrumb-item active">Jobs</li>
 @endsection
 

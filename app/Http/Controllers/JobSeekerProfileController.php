@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Certification;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -528,5 +529,95 @@ class JobSeekerProfileController extends Controller
         }
         
         return array_slice($steps, 0, 3);
+    }
+    public function updateProfilePicture(Request $request)
+    {
+        $request->validate([
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
+        $user = Auth::user();
+        
+        // Delete old profile picture if exists
+        if ($user->profile_picture) {
+            $this->deleteProfilePicture($user->profile_picture);
+        }
+
+        // Upload new image
+        if ($request->hasFile('profile_picture')) {
+            $image = $request->file('profile_picture');
+            
+            // Generate unique filename
+            $filename = 'profile_' . $user->id . '_' . time() . '.' . $image->getClientOriginalExtension();
+            
+            // Store in public disk
+            $path = $image->storeAs('profile_pictures', $filename, 'public');
+            
+            // Save path to database
+            $user->profile_picture = $path;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Profile picture updated successfully!',
+                'image_url' => Storage::url($path)
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'No image uploaded.'
+        ], 400);
+    }
+
+    // Remove profile picture
+    public function removeProfilePicture()
+    {
+        $user = Auth::user();
+        
+        if ($user->profile_picture) {
+            $this->deleteProfilePicture($user->profile_picture);
+            
+            $user->profile_picture = null;
+            $user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Profile picture removed successfully!'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'No profile picture to remove.'
+        ], 400);
+    }
+
+    // Helper function to delete profile picture
+    private function deleteProfilePicture($path)
+    {
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+        
+        // Also delete thumbnail if exists
+        $thumbnailPath = 'profile_pictures/thumbs/' . basename($path);
+        if (Storage::disk('public')->exists($thumbnailPath)) {
+            Storage::disk('public')->delete($thumbnailPath);
+        }
+    }
+
+    // Get current profile picture URL
+    public function getProfilePicture()
+    {
+        $user = Auth::user();
+        
+        $url = $user->profile_picture 
+            ? Storage::url($user->profile_picture) 
+            : null;
+
+        return response()->json([
+            'profile_picture' => $url
+        ]);
     }
 }

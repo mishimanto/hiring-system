@@ -112,4 +112,5 @@ class DashboardController extends Controller
 
         return view('job-seeker.dashboard', compact('stats', 'applications', 'suggestedJobs'));
     }
+    
 }

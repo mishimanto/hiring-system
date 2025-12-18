@@ -296,4 +296,22 @@ class JobController extends Controller
 
         return back()->with('success', 'Application submitted successfully!');
     }
+
+    public function category($slug)
+{
+    $jobs = OpenJob::with(['employer', 'category'])
+        ->whereHas('category', function ($q) use ($slug) {
+            $q->where('slug', $slug);
+        })
+        ->where('status', 'approved')
+        ->where('is_active', 1)
+        ->whereDate('deadline', '>=', now())
+        ->latest()
+        ->paginate(10);
+
+    $category = Category::where('slug', $slug)->firstOrFail();
+
+    return view('jobs.category', compact('jobs', 'category'));
+}
+
 }
