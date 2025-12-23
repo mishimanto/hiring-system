@@ -1211,9 +1211,9 @@
                     <i class="fas fa-folder-open"></i>
                 </div>
                 <h3 class="no-jobs-title">No Categories Available</h3>
-                <p class="no-jobs-text">
+                <!-- <p class="no-jobs-text">
                     Currently there are no job categories available. Check back later for updates.
-                </p>
+                </p> -->
             </div>
         @endif
     </div>

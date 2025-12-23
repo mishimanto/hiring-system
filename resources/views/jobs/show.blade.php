@@ -73,6 +73,18 @@
 .modal-content {
     border-radius: 16px;
 }
+
+.login-prompt {
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+}
+
+.login-prompt i {
+
+}
 </style>
 
 <div class="container py-5 job-page">
@@ -187,12 +199,12 @@
                 </div>
             </div>
 
-            @auth
-                @if(auth()->user()->isJobSeeker())
-                    <!-- Apply Section -->
-                    <div class="card sidebar-card">
-                        <div class="card-header">Apply for this Job</div>
-                        <div class="card-body">
+            <!-- Apply Section -->
+            <div class="card sidebar-card">
+                <div class="card-header">Apply for this Job</div>
+                <div class="card-body">
+                    @auth
+                        @if(auth()->user()->isJobSeeker())
                             @if($hasApplied)
                                 <div class="alert alert-info">You already applied.</div>
                                 <a href="{{ route('applications.index') }}" class="btn btn-primary w-100">View Applications</a>
@@ -201,11 +213,35 @@
                                     <i class="fas fa-paper-plane me-2"></i>Apply Now
                                 </button>
                             @endif
+                        @else
+                            <!-- User is logged in but not a job seeker -->
+                            <div class="login-prompt">
+                                <i class="fas fa-user-tie"></i>
+                                <h5>Your are not elegable for this </h5>
+                                <!-- <p class="text-muted">You need a job seeker account to apply for jobs.</p>
+                                <a href="{{ route('dashboard') }}" class="btn btn-outline-primary mt-2">
+                                    Go to Dashboard
+                                </a> -->
+                            </div>
+                        @endif
+                    @else
+                        <!-- User is not logged in -->
+                        <div class="login-prompt">
+                            <i class="fas fa-user-lock"></i>
+                            <h5>Login Required</h5>
+                            <!-- <p class="text-muted">You need to login to apply for this job.</p> -->
+                            <div class="d-grid gap-2 mt-3">
+                                <a href="{{ route('login') }}" class="btn btn-primary">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                                </a>
+                                <!-- <a href="{{ route('register') }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-user-plus me-2"></i>Register
+                                </a> -->
+                            </div>
                         </div>
-                    </div>
-                @endif
-            @endauth
-
+                    @endauth
+                </div>
+            </div>
 
             <!-- Quick Stats -->
             <div class="card mt-4 text-center">
@@ -227,127 +263,137 @@
     </div>
 </div>
 
-<!-- Apply Modal -->
-<div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="applyModalLabel">Apply for "{{ $openjob->title }}"</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('jobs.apply', $openjob) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    
-                    <!-- Cover Letter -->
-                    <div class="mb-3">
-                        <label for="cover_letter" class="form-label">
-                            Cover Letter <span class="text-danger">*</span>
-                            <small class="text-muted">(Minimum 100 characters)</small>
-                        </label>
-                        <textarea 
-                            name="cover_letter" 
-                            id="cover_letter" 
-                            class="form-control @error('cover_letter') is-invalid @enderror" 
-                            rows="8" 
-                            placeholder="Tell us why you are a good fit for this position..."
-                            required
-                            minlength="100"
-                            maxlength="1000">{{ old('cover_letter') }}</textarea>
-                        @error('cover_letter')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        <div class="form-text">
-                            Current count: <span id="charCount">0</span>/1000
-                        </div>
-                    </div>
-
-                    <!-- Resume Upload -->
-                    <div class="mb-3">
-                        <label for="resume" class="form-label">Resume</label>
-                        <div class="input-group">
-                            <input 
-                                type="file" 
-                                class="form-control @error('resume') is-invalid @enderror" 
-                                id="resume" 
-                                name="resume"
-                                accept=".pdf,.doc,.docx">
-                            @error('resume')
+<!-- Apply Modal (Only show when user is logged in as job seeker) -->
+@auth
+    @if(auth()->user()->isJobSeeker() && !$hasApplied)
+    <div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="applyModalLabel">Apply for "{{ $openjob->title }}"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('jobs.apply', $openjob) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        
+                        <!-- Cover Letter -->
+                        <div class="mb-3">
+                            <label for="cover_letter" class="form-label">
+                                Cover Letter <span class="text-danger">*</span>
+                                <small class="text-muted">(Minimum 100 characters)</small>
+                            </label>
+                            <textarea 
+                                name="cover_letter" 
+                                id="cover_letter" 
+                                class="form-control @error('cover_letter') is-invalid @enderror" 
+                                rows="8" 
+                                placeholder="Tell us why you are a good fit for this position..."
+                                required
+                                minlength="100"
+                                maxlength="1000">{{ old('cover_letter') }}</textarea>
+                            @error('cover_letter')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            <div class="form-text">
+                                Current count: <span id="charCount">0</span>/1000
+                            </div>
                         </div>
-                        <div class="form-text">
-                            Accepted formats: PDF, DOC, DOCX (Max: 2MB)
-                            @if(auth()->user()->resume_path)
-                                <br>
-                                <small class="text-info">
-                                    <i class="fas fa-info-circle"></i> 
-                                    You already have a resume uploaded. If you don't upload a new one, your existing resume will be used.
-                                </small>
-                            @endif
-                        </div>
-                    </div>
 
-                    <!-- Job Details Review -->
-                    <div class="card border-info mb-3">
-                        <div class="card-header bg-info text-white">
-                            <i class="fas fa-file-alt me-2"></i>Job Summary
+                        <!-- Resume Upload -->
+                        <div class="mb-3">
+                            <label for="resume" class="form-label">
+                                Resume <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <input 
+                                    type="file" 
+                                    class="form-control @error('resume') is-invalid @enderror" 
+                                    id="resume" 
+                                    name="resume"
+                                    accept=".pdf,.doc,.docx"
+                                    required>
+                                @error('resume')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-text">
+                                Accepted formats: PDF, DOC, DOCX (Max: 2MB)
+                                @php
+                                    $userHasResume = auth()->check() && auth()->user()->resume_path;
+                                @endphp
+                                @if($userHasResume)
+                                    <br>
+                                    <small class="text-info">
+                                        <i class="fas fa-info-circle"></i> 
+                                        You already have a resume uploaded. If you don't upload a new one, your existing resume will be used.
+                                    </small>
+                                @endif
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><strong>Job Title:</strong> {{ $openjob->title }}</p>
-                                    <p><strong>Company:</strong> {{ $openjob->employer->company_name }}</p>
-                                    <p><strong>Location:</strong> {{ $openjob->location }}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><strong>Type:</strong> {{ ucfirst(str_replace('_', ' ', $openjob->job_type)) }}</p>
-                                    <p><strong>Salary:</strong> {{ $openjob->salary_range }}</p>
-                                    <p><strong>Deadline:</strong> {{ $openjob->deadline->format('F d, Y') }}</p>
+
+                        <!-- Job Details Review -->
+                        <div class="card border-info mb-3">
+                            <div class="card-header bg-info text-white">
+                                <i class="fas fa-file-alt me-2"></i>Job Summary
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Job Title:</strong> {{ $openjob->title }}</p>
+                                        <p><strong>Company:</strong> {{ $openjob->employer->company_name }}</p>
+                                        <p><strong>Location:</strong> {{ $openjob->location }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Type:</strong> {{ ucfirst(str_replace('_', ' ', $openjob->job_type)) }}</p>
+                                        <p><strong>Salary:</strong> {{ $openjob->salary_range }}</p>
+                                        <p><strong>Deadline:</strong> {{ $openjob->deadline->format('F d, Y') }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Terms Agreement -->
-                    <div class="form-check mb-3">
-                        <input 
-                            class="form-check-input @error('terms') is-invalid @enderror" 
-                            type="checkbox" 
-                            id="terms" 
-                            name="terms" 
-                            required>
-                        <label class="form-check-label" for="terms">
-                            I agree that the information I've provided is accurate and I understand that this application will be sent to the employer.
-                        </label>
-                        @error('terms')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                        <!-- Terms Agreement -->
+                        <div class="form-check mb-3">
+                            <input 
+                                class="form-check-input @error('terms') is-invalid @enderror" 
+                                type="checkbox" 
+                                id="terms" 
+                                name="terms" 
+                                required>
+                            <label class="form-check-label" for="terms">
+                                I agree that the information I've provided is accurate and I understand that this application will be sent to the employer.
+                            </label>
+                            @error('terms')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-paper-plane me-2"></i>Submit Application
-                    </button>
-                </div>
-            </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Application
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+    @endif
+@endauth
 
 @endsection
 
 @push('scripts')
 <script>
     // Character counter for cover letter
-    document.getElementById('cover_letter').addEventListener('input', function() {
+    document.getElementById('cover_letter')?.addEventListener('input', function() {
         document.getElementById('charCount').textContent = this.value.length;
     });
 
     // File size validation
-    document.getElementById('resume').addEventListener('change', function() {
+    document.getElementById('resume')?.addEventListener('change', function() {
         const file = this.files[0];
         const maxSize = 2 * 1024 * 1024; // 2MB
         const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
@@ -370,18 +416,26 @@
     });
 
     // Form validation
-    document.querySelector('form').addEventListener('submit', function(e) {
+    document.querySelector('#applyModal form')?.addEventListener('submit', function(e) {
         const coverLetter = document.getElementById('cover_letter');
+        const resume = document.getElementById('resume');
         const terms = document.getElementById('terms');
         
-        if (coverLetter.value.length < 100) {
+        if (coverLetter && coverLetter.value.length < 100) {
             e.preventDefault();
             alert('Cover letter must be at least 100 characters long.');
             coverLetter.focus();
             return false;
         }
         
-        if (!terms.checked) {
+        if (resume && !resume.files.length) {
+            e.preventDefault();
+            alert('Please upload a resume file.');
+            resume.focus();
+            return false;
+        }
+        
+        if (terms && !terms.checked) {
             e.preventDefault();
             alert('You must agree to the terms before submitting.');
             terms.focus();

@@ -21,7 +21,10 @@ Route::get('/', function () {
         ->take(6)
         ->get();
     
-    $categories = \App\Models\OpenJob::distinct('category')->pluck('category');
+    $categories = \App\Models\Category::where('is_active', true)
+        ->orderBy('name')
+        ->pluck('name')
+        ->toArray();
 
     $activeJobsCount = \App\Models\OpenJob::where('status', 'approved')
             ->where('is_active', 1)
