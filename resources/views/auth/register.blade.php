@@ -345,7 +345,7 @@
             padding: 20px;
             border-radius: var(--border-radius);
             border: 2px solid #e9ecef;
-            margin-top: 20px;
+            margin: 20px 0;
             animation: slideDown 0.3s ease;
             display: none;
         }
